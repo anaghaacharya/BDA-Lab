@@ -1,0 +1,137 @@
+Connected to Cassandra Cluster at 127.0.0.1:9042
+[cqlsh 6.0.0 | Cassandra 4.0.0 | CQL spec 3.4.5 | Native protocol v5]
+Use HELP for help.
+cqlsh> 
+cqlsh> 
+cqlsh> create keyspace University with replication={'class':'SimpleStrategy','replication_factor':1};
+cqlsh> use University;
+cqlsh:university> create table student(rollno int primary key,name text,dept text);
+cqlsh:university> alter table student add semester int;
+cqlsh:university> describe student;
+
+CREATE TABLE university.student (
+    rollno int PRIMARY KEY,
+    dept text,
+    name text,
+    semester int
+) WITH additional_write_policy = '99p'
+    AND bloom_filter_fp_chance = 0.01
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'NONE'}
+    AND cdc = false
+    AND comment = ''
+    AND compaction = {'class': 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold': '32', 'min_threshold': '4'}
+    AND compression = {'chunk_length_in_kb': '16', 'class': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
+    AND default_time_to_live = 0
+    AND extensions = {}
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair = 'BLOCKING'
+    AND speculative_retry = '99p';
+cqlsh:university> insert into student(rollno,name,dept,semester) values(2,'Michael','CS',2);
+cqlsh:university> update student set name='Hayden' where rollno=2;
+cqlsh:university> select * from student;
+
+ rollno | dept | name   | semester
+--------+------+--------+----------
+      2 |   CS | Hayden |        2
+(1 rows)
+cqlsh:university> begin batch
+              ... insert into student(rollno,name,dept,semester) values(1,'Abhinav','CS',6)
+              ... insert into student(rollno,name,dept,semester) values(18,'Ramya','IS',6)
+              ... insert into student(rollno,name,dept,semester) values(27,'Anagha','IS',6)             
+              ... insert into student(rollno,name,dept,semester) values(5,'Saurabh','ECE',4)
+              ... apply batch;
+cqlsh:university> select * from student;
+ rollno | dept | name    | semester
+--------+------+---------+----------
+      5 |  ECE | Saurabh |        4
+      1 |   CS | Abhinav |        6
+      2 |   CS |  Hayden |        2
+     18 |   IS |   Ramya |        6
+     27 |   IS |  Anagha |        6
+
+(5 rows)
+cqlsh:university> delete from student where rollno=2;
+cqlsh:university> create index deptindex on student(dept);
+cqlsh:university> select * from student where dept='CS';
+
+ rollno | dept | name    | semester
+--------+------+---------+----------
+      1 |   CS | Abhinav |        6
+
+(1 rows)
+cqlsh:university> drop index if exists deptindex;
+cqlsh:university> insert into student(rollno,name,dept,semester) values(50,'Manu','EE',2) using ttl 100;
+cqlsh:university> select * from student;
+ rollno | dept | name    | semester
+--------+------+---------+----------
+      5 |  ECE | Saurabh |        4
+     50 |   EE |    Manu |        2
+      1 |   CS | Abhinav |        6
+     18 |   IS |   Ramya |        6
+     27 |   IS |  Anagha |        6
+
+(5 rows)
+cqlsh:university> select * from student;
+
+ rollno | dept | name    | semester
+--------+------+---------+----------
+      5 |  ECE | Saurabh |        4
+      1 |   CS | Abhinav |        6
+     18 |   IS |   Ramya |        6
+     27 |   IS |  Anagha |        6
+
+(4 rows)
+cqlsh:university> create table teacher(id int primary key,name text,email set<text>);
+cqlsh:university> alter table teacher add coursenames list<text>;
+cqlsh:university> describe teacher;
+
+CREATE TABLE university.teacher (
+    id int PRIMARY KEY,
+    name text,
+    coursenames list<text>,
+    email set<text>
+) WITH additional_write_policy = '99p'
+    AND bloom_filter_fp_chance = 0.01
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'NONE'}
+    AND cdc = false
+    AND comment = ''
+    AND compaction = {'class': 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold': '32', 'min_threshold': '4'}
+    AND compression = {'chunk_length_in_kb': '16', 'class': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
+    AND default_time_to_live = 0
+    AND extensions = {}
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair = 'BLOCKING'
+    AND speculative_retry = '99p';
+cqlsh:university> insert into teacher(id,name,email,coursenames) values(2,'Hamilton',{'hamilton@yahoo.com'},['DS']);
+cqlsh:university> select * from teacher;
+
+ id | coursenames | email                  | name
+----+-------------+------------------------+----------
+  2 |      ['DS'] | {'hamilton@yahoo.com'} | Hamilton
+
+(1 rows)
+cqlsh:university> create table course(id int primary key,prereq map<text,text>);
+cqlsh:university> insert into course(id,prereq) values(1,{'DS':'Database','Neural Network':'AI'});
+cqlsh:university> select * from course;
+
+ id | prereq
+----+--------------------------------------------
+  1 | {'DS': 'Database', 'Neural Network': 'AI'}
+
+(1 rows)
+cqlsh:university> truncate student;
+cqlsh:university> select * from student;
+
+ rollno | dept | name | semester
+--------+------+------+----------
+
+(0 rows)
+cqlsh:university> drop table student;
