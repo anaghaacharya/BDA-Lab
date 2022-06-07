@@ -1,0 +1,100 @@
+bmsce@bmsce-not-so-precised-animo-succker:~$ cqlsh
+Connected to Test Cluster at 127.0.0.1:9042.
+[cqlsh 5.0.1 | Cassandra 3.11.4 | CQL spec 3.4.4 | Native protocol v4]
+Use HELP for help.
+cqlsh> create keyspace employee_224 with replication={'class':'SimpleStrategy','replication_factor':1};
+cqlsh> use employee_224;
+cqlsh:employee_224> create table empinfo(emp_id int, emp_name text, designation text,doj date,salary double,dept_name text, primary key(emp_id,salary));
+cqlsh:employee_224> describe empinfo;
+
+CREATE TABLE employee_224.empinfo (
+    emp_id int,
+    salary double,
+    dept_name text,
+    designation text,
+    doj date,
+    emp_name text,
+    PRIMARY KEY (emp_id, salary)
+) WITH CLUSTERING ORDER BY (salary ASC)
+    AND bloom_filter_fp_chance = 0.01
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'NONE'}
+    AND comment = ''
+    AND compaction = {'class': 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold': '32', 'min_threshold': '4'}
+    AND compression = {'chunk_length_in_kb': '64', 'class': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
+    AND dclocal_read_repair_chance = 0.1
+    AND default_time_to_live = 0
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair_chance = 0.0
+    AND speculative_retry = '99PERCENTILE';
+
+cqlsh:employee_224> begin batch
+                ... insert into empinfo(emp_id,emp_name,designation,doj,salary,dept_name) values(1,'Abhinav','Director','2010-08-28',5000000,'Business')
+                ... apply batch;
+cqlsh:employee_224> begin batch
+                ... insert into empinfo(emp_id,emp_name,designation,doj,salary,dept_name) values(2,'Saurabh','Manager','2020-05-20',800000,'Sales')
+                ... insert into empinfo(emp_id,emp_name,designation,doj,salary,dept_name) values(3,'Rythm','HR','2021-10-10',1000000,'HR')
+                ... insert into empinfo(emp_id,emp_name,designation,doj,salary,dept_name) values(4,'Anagha','Executive Director','2016-03-27',3000000,'R&D')
+                ... apply batch;
+cqlsh:employee_224> select * from empinfo;
+
+ emp_id | salary | dept_name | designation        | doj        | emp_name
+--------+--------+-----------+--------------------+------------+----------
+      1 |  5e+06 |  Business |           Director | 2010-08-28 |  Abhinav
+      2 |  8e+05 |     Sales |            Manager | 2020-05-20 |  Saurabh
+      4 |  3e+06 |       R&D | Executive Director | 2016-03-27 |   Anagha
+      3 |  1e+06 |        HR |                 HR | 2021-10-10 |    Rythm
+
+(4 rows)
+cqlsh:employee_224> update empinfo set emp_name='Manu' where emp_id=3 and salary=1000000;
+cqlsh:employee_224> select * from empinfo;
+
+ emp_id | salary | dept_name | designation        | doj        | emp_name
+--------+--------+-----------+--------------------+------------+----------
+      1 |  5e+06 |  Business |           Director | 2010-08-28 |  Abhinav
+      2 |  8e+05 |     Sales |            Manager | 2020-05-20 |  Saurabh
+      4 |  3e+06 |       R&D | Executive Director | 2016-03-27 |   Anagha
+      3 |  1e+06 |        HR |                 HR | 2021-10-10 |     Manu
+cqlsh:employee_224> alter table empinfo add projects set<text>;
+cqlsh:employee_224> update empinfo set projects=projects+{'Psychology of body','Strength and conditioning'} where emp_id=4 and salary=3000000;
+cqlsh:employee_224> update empinfo set projects=projects+{'Analytics','Risk assesment'} where emp_id=2 and salary=800000;
+qlsh:employee_224> update empinfo set projects=projects+{'Diversity management'} where emp_id=3 and salary=1000000;
+cqlsh:employee_224> update empinfo set projects=projects+{'Role of motivation in improving organisational performance'} where emp_id=1 and salary=5000000;
+cqlsh:employee_224> select * from empinfo;
+
+ emp_id | salary | dept_name | designation        | doj        | emp_name | projects
+--------+--------+-----------+--------------------+------------+----------+----------------------------------------------------------------
+      1 |  5e+06 |  Business |           Director | 2010-08-28 |  Abhinav | {'Role of motivation in improving organisational performance'}
+      2 |  8e+05 |     Sales |            Manager | 2020-05-20 |  Saurabh |                                {'Analytics', 'Risk assesment'}
+      4 |  3e+06 |       R&D | Executive Director | 2016-03-27 |   Anagha |            {'Psychology of body', 'Strength and conditioning'}
+      3 |  1e+06 |        HR |                 HR | 2021-10-10 |     Manu |                                       {'Diversity management'}
+cqlsh:employee_224> insert into empinfo(emp_id,emp_name,designation,doj,salary,dept_name,projects) values(5,'Rakesh','Lawyer','2012-05-07',1200000,'Legal',{'Doping crime in international law'}) using ttl 15;
+cqlsh:employee_224> select * from empinfo;
+
+ emp_id | salary  | dept_name | designation        | doj        | emp_name | projects
+--------+---------+-----------+--------------------+------------+----------+----------------------------------------------------------------
+      5 | 1.2e+06 |     Legal |             Lawyer | 2012-05-07 |   Rakesh |                          {'Doping crime in international law'}
+      1 |   5e+06 |  Business |           Director | 2010-08-28 |  Abhinav | {'Role of motivation in improving organisational performance'}
+      2 |   8e+05 |     Sales |            Manager | 2020-05-20 |  Saurabh |                                {'Analytics', 'Risk assesment'}
+      4 |   3e+06 |       R&D | Executive Director | 2016-03-27 |   Anagha |            {'Psychology of body', 'Strength and conditioning'}
+      3 |   1e+06 |        HR |                 HR | 2021-10-10 |     Manu |                                       {'Diversity management'}
+
+(5 rows)
+cqlsh:employee_224> select ttl(emp_name) from empinfo where emp_id=5;
+
+ ttl(emp_name)
+---------------
+             8
+cqlsh:employee_224> select * from empinfo;
+
+ emp_id | salary | dept_name | designation        | doj        | emp_name | projects
+--------+--------+-----------+--------------------+------------+----------+----------------------------------------------------------------
+      1 |  5e+06 |  Business |           Director | 2010-08-28 |  Abhinav | {'Role of motivation in improving organisational performance'}
+      2 |  8e+05 |     Sales |            Manager | 2020-05-20 |  Saurabh |                                {'Analytics', 'Risk assesment'}
+      4 |  3e+06 |       R&D | Executive Director | 2016-03-27 |   Anagha |            {'Psychology of body', 'Strength and conditioning'}
+      3 |  1e+06 |        HR |                 HR | 2021-10-10 |     Manu |                                       {'Diversity management'}
+
+(4 rows)
