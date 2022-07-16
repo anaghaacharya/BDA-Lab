@@ -1,0 +1,205 @@
+hduser@bmsce-Precision-T1700:~$ start-all.sh
+This script is Deprecated. Instead use start-dfs.sh and start-yarn.sh
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by org.apache.hadoop.security.authentication.util.KerberosUtil (file:/usr/local/hadoop/share/hadoop/common/lib/hadoop-auth-2.6.0.jar) to method sun.security.krb5.Config.getInstance()
+WARNING: Please consider reporting this to the maintainers of org.apache.hadoop.security.authentication.util.KerberosUtil
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+Starting namenodes on [localhost]
+hduser@localhost's password: 
+localhost: starting namenode, logging to /usr/local/hadoop/logs/hadoop-hduser-namenode-bmsce-Precision-T1700.out
+localhost: WARNING: An illegal reflective access operation has occurred
+localhost: WARNING: Illegal reflective access by org.apache.hadoop.security.authentication.util.KerberosUtil (file:/usr/local/hadoop/share/hadoop/common/lib/hadoop-auth-2.6.0.jar) to method sun.security.krb5.Config.getInstance()
+localhost: WARNING: Please consider reporting this to the maintainers of org.apache.hadoop.security.authentication.util.KerberosUtil
+localhost: WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+localhost: WARNING: All illegal access operations will be denied in a future release
+hduser@localhost's password: 
+localhost: starting datanode, logging to /usr/local/hadoop/logs/hadoop-hduser-datanode-bmsce-Precision-T1700.out
+localhost: WARNING: An illegal reflective access operation has occurred
+localhost: WARNING: Illegal reflective access by org.apache.hadoop.security.authentication.util.KerberosUtil (file:/usr/local/hadoop/share/hadoop/common/lib/hadoop-auth-2.6.0.jar) to method sun.security.krb5.Config.getInstance()
+localhost: WARNING: Please consider reporting this to the maintainers of org.apache.hadoop.security.authentication.util.KerberosUtil
+localhost: WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+localhost: WARNING: All illegal access operations will be denied in a future release
+Starting secondary namenodes [0.0.0.0]
+hduser@0.0.0.0's password: 
+0.0.0.0: starting secondarynamenode, logging to /usr/local/hadoop/logs/hadoop-hduser-secondarynamenode-bmsce-Precision-T1700.out
+0.0.0.0: WARNING: An illegal reflective access operation has occurred
+0.0.0.0: WARNING: Illegal reflective access by org.apache.hadoop.security.authentication.util.KerberosUtil (file:/usr/local/hadoop/share/hadoop/common/lib/hadoop-auth-2.6.0.jar) to method sun.security.krb5.Config.getInstance()
+0.0.0.0: WARNING: Please consider reporting this to the maintainers of org.apache.hadoop.security.authentication.util.KerberosUtil
+0.0.0.0: WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+0.0.0.0: WARNING: All illegal access operations will be denied in a future release
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by org.apache.hadoop.security.authentication.util.KerberosUtil (file:/usr/local/hadoop/share/hadoop/common/lib/hadoop-auth-2.6.0.jar) to method sun.security.krb5.Config.getInstance()
+WARNING: Please consider reporting this to the maintainers of org.apache.hadoop.security.authentication.util.KerberosUtil
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+starting yarn daemons
+starting resourcemanager, logging to /usr/local/hadoop/logs/yarn-hduser-resourcemanager-bmsce-Precision-T1700.out
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by org.apache.hadoop.security.authentication.util.KerberosUtil (file:/usr/local/hadoop/share/hadoop/common/lib/hadoop-auth-2.6.0.jar) to method sun.security.krb5.Config.getInstance()
+WARNING: Please consider reporting this to the maintainers of org.apache.hadoop.security.authentication.util.KerberosUtil
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+hduser@localhost's password: 
+localhost: starting nodemanager, logging to /usr/local/hadoop/logs/yarn-hduser-nodemanager-bmsce-Precision-T1700.out
+localhost: WARNING: An illegal reflective access operation has occurred
+localhost: WARNING: Illegal reflective access by org.apache.hadoop.security.authentication.util.KerberosUtil (file:/usr/local/hadoop/share/hadoop/common/lib/hadoop-auth-2.6.0.jar) to method sun.security.krb5.Config.getInstance()
+localhost: WARNING: Please consider reporting this to the maintainers of org.apache.hadoop.security.authentication.util.KerberosUtil
+localhost: WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+localhost: WARNING: All illegal access operations will be denied in a future release
+
+hduser@bmsce-Precision-T1700:~$ jps
+8386 NodeManager
+7654 DataNode
+7879 SecondaryNameNode
+7463 NameNode
+9143 Jps
+8044 ResourceManager
+
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -mkdir /227new
+
+hduser@bmsce-Precision-T1700:~$ hadoop fs -ls /
+Found 11 items
+drwxr-xr-x   - hduser supergroup          0 2022-06-01 10:12 /1bm19cs186
+drwxr-xr-x   - hduser supergroup          0 2022-06-04 09:27 /227new
+drwxr-xr-x   - hduser supergroup          0 2022-06-03 12:20 /Copy-Secure
+drwxr-xr-x   - hduser supergroup          0 2022-06-03 12:06 /Sharan
+drwxr-xr-x   - hduser supergroup          0 2022-06-03 14:57 /bda
+drwxr-xr-x   - hduser supergroup          0 2022-06-01 09:32 /firstlab
+drwxr-xr-x   - hduser supergroup          0 2022-06-01 09:32 /lab
+drwxr-xr-x   - hduser supergroup          0 2022-06-01 14:59 /nothing
+drwxr-xr-x   - hduser supergroup          0 2022-06-01 15:27 /something
+drwxrwxr-x   - hduser supergroup          0 2019-08-01 16:19 /tmp
+drwxr-xr-x   - hduser supergroup          0 2019-08-01 16:03 /user
+
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -put /home/hduser/Desktop/Welcome.txt /227new/WC.txt
+
+hduser@bmsce-Precision-T1700:~$ hadoop fs -ls /227new
+Found 1 items
+-rw-r--r--   1 hduser supergroup         15 2022-06-04 09:33 /227new/WC.txt
+
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -cat /227new/WC.txt
+Hello! Welcome
+
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -copyFromLocal /home/hduser/Desktop/Welcome.txt /227new/WC1.txt
+
+hduser@bmsce-Precision-T1700:~$ hadoop fs -ls /227new
+Found 2 items
+-rw-r--r--   1 hduser supergroup         15 2022-06-04 09:33 /227new/WC.txt
+-rw-r--r--   1 hduser supergroup         15 2022-06-04 09:37 /227new/WC1.txt
+
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -cat /227new/WC1.txt
+Hello! Welcome
+
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -get /227new/WC.txt /home/hduser/Downloads/WWC.txt
+
+hduser@bmsce-Precision-T1700:~$ hadoop fs -ls /
+Found 11 items
+drwxr-xr-x   - hduser supergroup          0 2022-06-01 10:12 /1bm19cs186
+drwxr-xr-x   - hduser supergroup          0 2022-06-04 09:37 /227new
+drwxr-xr-x   - hduser supergroup          0 2022-06-03 12:20 /Copy-Secure
+drwxr-xr-x   - hduser supergroup          0 2022-06-03 12:06 /Sharan
+drwxr-xr-x   - hduser supergroup          0 2022-06-03 14:57 /bda
+drwxr-xr-x   - hduser supergroup          0 2022-06-01 09:32 /firstlab
+drwxr-xr-x   - hduser supergroup          0 2022-06-01 09:32 /lab
+drwxr-xr-x   - hduser supergroup          0 2022-06-01 14:59 /nothing
+drwxr-xr-x   - hduser supergroup          0 2022-06-01 15:27 /something
+drwxrwxr-x   - hduser supergroup          0 2019-08-01 16:19 /tmp
+drwxr-xr-x   - hduser supergroup          0 2019-08-01 16:03 /user
+
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -getmerge /227new/WC.txt /227new/WC1.txt /home/hduser/Desktop/Merge.txt
+
+hduser@bmsce-Precision-T1700:~$ hadoop fs -getfacl /227new/
+# file: /227new
+# owner: hduser
+# group: supergroup
+user::rwx
+group::r-x
+other::r-x
+
+hduser@bmsce-Precision-T1700:~$ sudo nano abc.txt
+[sudo] password for hduser: 
+
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -put /home/hduser/abc.txt /227new/name.txt
+
+hduser@bmsce-Precision-T1700:~$ hadoop fs -ls /227new
+Found 3 items
+-rw-r--r--   1 hduser supergroup         15 2022-06-04 09:33 /227new/WC.txt
+-rw-r--r--   1 hduser supergroup         15 2022-06-04 09:37 /227new/WC1.txt
+-rw-r--r--   1 hduser supergroup         20 2022-06-04 09:51 /227new/name.txt
+
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -cat /227new/name.txt
+This is Ramya here!
+
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -copyToLocal /227new/name.txt /home/hduser/Desktop
+
+hduser@bmsce-Precision-T1700:~$ hadoop fs -ls /
+Found 11 items
+drwxr-xr-x   - hduser supergroup          0 2022-06-01 10:12 /1bm19cs186
+drwxr-xr-x   - hduser supergroup          0 2022-06-04 09:51 /227new
+drwxr-xr-x   - hduser supergroup          0 2022-06-03 12:20 /Copy-Secure
+drwxr-xr-x   - hduser supergroup          0 2022-06-03 12:06 /Sharan
+drwxr-xr-x   - hduser supergroup          0 2022-06-03 14:57 /bda
+drwxr-xr-x   - hduser supergroup          0 2022-06-01 09:32 /firstlab
+drwxr-xr-x   - hduser supergroup          0 2022-06-01 09:32 /lab
+drwxr-xr-x   - hduser supergroup          0 2022-06-01 14:59 /nothing
+drwxr-xr-x   - hduser supergroup          0 2022-06-01 15:27 /something
+drwxrwxr-x   - hduser supergroup          0 2019-08-01 16:19 /tmp
+drwxr-xr-x   - hduser supergroup          0 2019-08-01 16:03 /user
+
+hduser@bmsce-Precision-T1700:~$ hadoop fs -mv /227new /227newer
+
+hduser@bmsce-Precision-T1700:~$ hadoop fs -ls /227newer
+Found 3 items
+-rw-r--r--   1 hduser supergroup         15 2022-06-04 09:33 /227newer/WC.txt
+-rw-r--r--   1 hduser supergroup         15 2022-06-04 09:37 /227newer/WC1.txt
+-rw-r--r--   1 hduser supergroup         20 2022-06-04 09:51 /227newer/name.txt
+
+hduser@bmsce-Precision-T1700:~$ hadoop fs -cp /227newer/  /227new
+
+hduser@bmsce-Precision-T1700:~$ hadoop fs -ls /227new
+Found 3 items
+-rw-r--r--   1 hduser supergroup         15 2022-06-04 09:58 /227new/WC.txt
+-rw-r--r--   1 hduser supergroup         15 2022-06-04 09:58 /227new/WC1.txt
+-rw-r--r--   1 hduser supergroup         20 2022-06-04 09:58 /227new/name.txt
+
+hduser@bmsce-Precision-T1700:~$ hadoop fs -ls /227newer
+Found 3 items
+-rw-r--r--   1 hduser supergroup         15 2022-06-04 09:33 /227newer/WC.txt
+-rw-r--r--   1 hduser supergroup         15 2022-06-04 09:37 /227newer/WC1.txt
+-rw-r--r--   1 hduser supergroup         20 2022-06-04 09:51 /227newer/name.txt
+
+hduser@bmsce-Precision-T1700:~$ hadoop fs -cp /227newer/name.txt  /227new
+cp: `/227new/name.txt': File exists
+
+hduser@bmsce-Precision-T1700:~$ sudo nano hello.txt
+
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -put /home/hduser/hello.txt /227newer/hello.txt
+
+hduser@bmsce-Precision-T1700:~$ hadoop fs -ls /227newer
+Found 4 items
+-rw-r--r--   1 hduser supergroup         15 2022-06-04 09:33 /227newer/WC.txt
+-rw-r--r--   1 hduser supergroup         15 2022-06-04 09:37 /227newer/WC1.txt
+-rw-r--r--   1 hduser supergroup         13 2022-06-04 10:02 /227newer/hello.txt
+-rw-r--r--   1 hduser supergroup         20 2022-06-04 09:51 /227newer/name.txt
+
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -cat /227newer/hello.txt
+hi hello bye
+
+hduser@bmsce-Precision-T1700:~$ hadoop fs -cp /227newer/hello.txt  /227new
+
+hduser@bmsce-Precision-T1700:~$ hadoop fs -ls /227newer
+Found 4 items
+-rw-r--r--   1 hduser supergroup         15 2022-06-04 09:33 /227newer/WC.txt
+-rw-r--r--   1 hduser supergroup         15 2022-06-04 09:37 /227newer/WC1.txt
+-rw-r--r--   1 hduser supergroup         13 2022-06-04 10:02 /227newer/hello.txt
+-rw-r--r--   1 hduser supergroup         20 2022-06-04 09:51 /227newer/name.txt
+
+hduser@bmsce-Precision-T1700:~$ hadoop fs -ls /227new
+Found 4 items
+-rw-r--r--   1 hduser supergroup         15 2022-06-04 09:58 /227new/WC.txt
+-rw-r--r--   1 hduser supergroup         15 2022-06-04 09:58 /227new/WC1.txt
+-rw-r--r--   1 hduser supergroup         13 2022-06-04 10:03 /227new/hello.txt
+-rw-r--r--   1 hduser supergroup         20 2022-06-04 09:58 /227new/name.txt
+
+hduser@bmsce-Precision-T1700:~$ 
