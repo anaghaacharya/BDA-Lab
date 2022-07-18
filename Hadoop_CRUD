@@ -1,0 +1,222 @@
+use anagha;
+db;
+show dbs;
+db.createCollection("student")
+
+db.student.insert({_id:0,StudName:"Tasmiya",Sem:"VI",Hobbies:"Singing"});
+db.student.insert({_id:1,StudName:"Trisha",Sem:"IV",Hobbies:"Carrom"});
+db.student.insert({_id:2,StudName:"Anagha",Sem:"V",Hobbies:"Drawing"});
+db.student.insert({_id:3,StudName:"Ramya",Sem:"VI",Hobbies:"Violin"});
+
+db.student.find({},{_id:0,StudName:1,Sem:1,Hobbies:1,Location:1}).pretty();
+
+db.student.update({_id:1},{$set:{Hobbies:"Cricket"}},{upsert:true});
+db.student.find({},{_id:0,StudName:1,Sem:1,Hobbies:1,Location:1}).pretty();
+
+db.student.update({StudName:'Rahul'},{$set:{Location:'BMS'}},{upsert:true});
+db.student.find({},{_id:0,StudName:1,Sem:1,Hobbies:1,Location:1}).pretty();
+
+db.student.update({StudName:'Meenakshi'},{$set:{Location:null}});
+db.student.find({},{_id:0,StudName:1,Sem:1,Hobbies:1,Location:1}).pretty();
+
+db.student.update({StudName:'Rahul'},{$unset:{Location:'BMS'}});
+db.student.find({},{_id:0,StudName:1,Sem:1,Hobbies:1,Location:1}).pretty();
+
+db.student.find({StudName:'Tasmiya'}).pretty();
+db.student.find({},{_id:0,StudName:1,Sem:1,Hobbies:1,Location:1}).pretty();
+
+db.student.find({Sem:'VI'}).pretty();
+db.student.find({},{_id:0,StudName:1,Sem:1,Hobbies:1,Location:1}).pretty();
+
+db.student.find({StudName:{$ne:'Ramya'},Sem:{$ne:'V'}}).pretty();
+db.student.find({},{_id:0,StudName:1,Sem:1,Hobbies:1,Location:1}).pretty();
+
+db.student.find({Sem:{$lte:'V'}}).pretty();
+db.student.find({},{_id:0,StudName:1,Sem:1,Hobbies:1,Location:1}).pretty();
+
+db.student.find({StudName:/^T/}).pretty();
+db.student.find({},{_id:0,StudName:1,Sem:1,Hobbies:1,Location:1}).pretty();
+
+db.student.find({StudName:/a$/}).pretty();
+db.student.find({},{_id:0,StudName:1,Sem:1,Hobbies:1,Location:1}).pretty();
+
+db.student.find({StudName:/r|R/}).pretty();
+db.student.find({},{_id:0,StudName:1,Sem:1,Hobbies:1,Location:1}).pretty();
+
+db.student.find({Hobbies:{$in:['Drawing','Violin']}}).pretty();
+db.student.find({},{_id:0,StudName:1,Sem:1,Hobbies:1,Location:1}).pretty();
+
+db.student.find().sort({Sem:1}).pretty();
+db.student.find({},{_id:0,StudName:1,Sem:1,Hobbies:1,Location:1}).pretty();
+
+db.student.find().sort({StudName:-1}).pretty();
+db.student.find({},{_id:0,StudName:1,Sem:1,Hobbies:1,Location:1}).pretty();
+
+db.student.save({StudName:'Meenakshi',Sem:'IV'});
+db.student.find({},{_id:0,StudName:1,Sem:1,Hobbies:1,Location:1}).pretty();
+
+db.student.count();
+db.student.count({Sem:'VI'})
+
+
+db.student.find({Sem:'IV'}).limit(1).pretty();
+
+db.student.find().skip(2).pretty();
+
+db.student.remove({StudName:'Rahul'}).pretty();
+db.student.find({},{_id:0,StudName:1,Sem:1,Hobbies:1,Location:1}).pretty();
+
+
+db.student.drop();
+
+
+OUTPUT:
+
+switched to db anagha
+anagha
+admin      0.000GB
+config     0.000GB
+harryKart  0.000GB
+local      0.000GB
+school     0.000GB
+{ "ok" : 1 }
+WriteResult({ "nInserted" : 1 })
+WriteResult({ "nInserted" : 1 })
+WriteResult({ "nInserted" : 1 })
+WriteResult({ "nInserted" : 1 })
+{ "StudName" : "Tasmiya", "Sem" : "VI", "Hobbies" : "Singing" }
+{ "StudName" : "Trisha", "Sem" : "IV", "Hobbies" : "Carrom" }
+{ "StudName" : "Anagha", "Sem" : "V", "Hobbies" : "Drawing" }
+{ "StudName" : "Ramya", "Sem" : "VI", "Hobbies" : "Violin" }
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+{ "StudName" : "Tasmiya", "Sem" : "VI", "Hobbies" : "Singing" }
+{ "StudName" : "Trisha", "Sem" : "IV", "Hobbies" : "Cricket" }
+{ "StudName" : "Anagha", "Sem" : "V", "Hobbies" : "Drawing" }
+{ "StudName" : "Ramya", "Sem" : "VI", "Hobbies" : "Violin" }
+WriteResult({
+	"nMatched" : 0,
+	"nUpserted" : 1,
+	"nModified" : 0,
+	"_id" : ObjectId("62d4c66a9e01af7adee22d59")
+})
+{ "StudName" : "Tasmiya", "Sem" : "VI", "Hobbies" : "Singing" }
+{ "StudName" : "Trisha", "Sem" : "IV", "Hobbies" : "Cricket" }
+{ "StudName" : "Anagha", "Sem" : "V", "Hobbies" : "Drawing" }
+{ "StudName" : "Ramya", "Sem" : "VI", "Hobbies" : "Violin" }
+{ "StudName" : "Rahul", "Location" : "BMS" }
+WriteResult({ "nMatched" : 0, "nUpserted" : 0, "nModified" : 0 })
+{ "StudName" : "Tasmiya", "Sem" : "VI", "Hobbies" : "Singing" }
+{ "StudName" : "Trisha", "Sem" : "IV", "Hobbies" : "Cricket" }
+{ "StudName" : "Anagha", "Sem" : "V", "Hobbies" : "Drawing" }
+{ "StudName" : "Ramya", "Sem" : "VI", "Hobbies" : "Violin" }
+{ "StudName" : "Rahul", "Location" : "BMS" }
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+{ "StudName" : "Tasmiya", "Sem" : "VI", "Hobbies" : "Singing" }
+{ "StudName" : "Trisha", "Sem" : "IV", "Hobbies" : "Cricket" }
+{ "StudName" : "Anagha", "Sem" : "V", "Hobbies" : "Drawing" }
+{ "StudName" : "Ramya", "Sem" : "VI", "Hobbies" : "Violin" }
+{ "StudName" : "Rahul" }
+{ "_id" : 0, "StudName" : "Tasmiya", "Sem" : "VI", "Hobbies" : "Singing" }
+{ "StudName" : "Tasmiya", "Sem" : "VI", "Hobbies" : "Singing" }
+{ "StudName" : "Trisha", "Sem" : "IV", "Hobbies" : "Cricket" }
+{ "StudName" : "Anagha", "Sem" : "V", "Hobbies" : "Drawing" }
+{ "StudName" : "Ramya", "Sem" : "VI", "Hobbies" : "Violin" }
+{ "StudName" : "Rahul" }
+{ "_id" : 0, "StudName" : "Tasmiya", "Sem" : "VI", "Hobbies" : "Singing" }
+{ "_id" : 3, "StudName" : "Ramya", "Sem" : "VI", "Hobbies" : "Violin" }
+{ "StudName" : "Tasmiya", "Sem" : "VI", "Hobbies" : "Singing" }
+{ "StudName" : "Trisha", "Sem" : "IV", "Hobbies" : "Cricket" }
+{ "StudName" : "Anagha", "Sem" : "V", "Hobbies" : "Drawing" }
+{ "StudName" : "Ramya", "Sem" : "VI", "Hobbies" : "Violin" }
+{ "StudName" : "Rahul" }
+{ "_id" : 0, "StudName" : "Tasmiya", "Sem" : "VI", "Hobbies" : "Singing" }
+{ "_id" : 1, "StudName" : "Trisha", "Sem" : "IV", "Hobbies" : "Cricket" }
+{ "_id" : ObjectId("62d4c66a9e01af7adee22d59"), "StudName" : "Rahul" }
+{ "StudName" : "Tasmiya", "Sem" : "VI", "Hobbies" : "Singing" }
+{ "StudName" : "Trisha", "Sem" : "IV", "Hobbies" : "Cricket" }
+{ "StudName" : "Anagha", "Sem" : "V", "Hobbies" : "Drawing" }
+{ "StudName" : "Ramya", "Sem" : "VI", "Hobbies" : "Violin" }
+{ "StudName" : "Rahul" }
+{ "_id" : 1, "StudName" : "Trisha", "Sem" : "IV", "Hobbies" : "Cricket" }
+{ "_id" : 2, "StudName" : "Anagha", "Sem" : "V", "Hobbies" : "Drawing" }
+{ "StudName" : "Tasmiya", "Sem" : "VI", "Hobbies" : "Singing" }
+{ "StudName" : "Trisha", "Sem" : "IV", "Hobbies" : "Cricket" }
+{ "StudName" : "Anagha", "Sem" : "V", "Hobbies" : "Drawing" }
+{ "StudName" : "Ramya", "Sem" : "VI", "Hobbies" : "Violin" }
+{ "StudName" : "Rahul" }
+{ "_id" : 0, "StudName" : "Tasmiya", "Sem" : "VI", "Hobbies" : "Singing" }
+{ "_id" : 1, "StudName" : "Trisha", "Sem" : "IV", "Hobbies" : "Cricket" }
+{ "StudName" : "Tasmiya", "Sem" : "VI", "Hobbies" : "Singing" }
+{ "StudName" : "Trisha", "Sem" : "IV", "Hobbies" : "Cricket" }
+{ "StudName" : "Anagha", "Sem" : "V", "Hobbies" : "Drawing" }
+{ "StudName" : "Ramya", "Sem" : "VI", "Hobbies" : "Violin" }
+{ "StudName" : "Rahul" }
+{ "_id" : 0, "StudName" : "Tasmiya", "Sem" : "VI", "Hobbies" : "Singing" }
+{ "_id" : 1, "StudName" : "Trisha", "Sem" : "IV", "Hobbies" : "Cricket" }
+{ "_id" : 2, "StudName" : "Anagha", "Sem" : "V", "Hobbies" : "Drawing" }
+{ "_id" : 3, "StudName" : "Ramya", "Sem" : "VI", "Hobbies" : "Violin" }
+{ "StudName" : "Tasmiya", "Sem" : "VI", "Hobbies" : "Singing" }
+{ "StudName" : "Trisha", "Sem" : "IV", "Hobbies" : "Cricket" }
+{ "StudName" : "Anagha", "Sem" : "V", "Hobbies" : "Drawing" }
+{ "StudName" : "Ramya", "Sem" : "VI", "Hobbies" : "Violin" }
+{ "StudName" : "Rahul" }
+{ "_id" : 1, "StudName" : "Trisha", "Sem" : "IV", "Hobbies" : "Cricket" }
+{ "_id" : 3, "StudName" : "Ramya", "Sem" : "VI", "Hobbies" : "Violin" }
+{ "_id" : ObjectId("62d4c66a9e01af7adee22d59"), "StudName" : "Rahul" }
+{ "StudName" : "Tasmiya", "Sem" : "VI", "Hobbies" : "Singing" }
+{ "StudName" : "Trisha", "Sem" : "IV", "Hobbies" : "Cricket" }
+{ "StudName" : "Anagha", "Sem" : "V", "Hobbies" : "Drawing" }
+{ "StudName" : "Ramya", "Sem" : "VI", "Hobbies" : "Violin" }
+{ "StudName" : "Rahul" }
+{ "_id" : 2, "StudName" : "Anagha", "Sem" : "V", "Hobbies" : "Drawing" }
+{ "_id" : 3, "StudName" : "Ramya", "Sem" : "VI", "Hobbies" : "Violin" }
+{ "StudName" : "Tasmiya", "Sem" : "VI", "Hobbies" : "Singing" }
+{ "StudName" : "Trisha", "Sem" : "IV", "Hobbies" : "Cricket" }
+{ "StudName" : "Anagha", "Sem" : "V", "Hobbies" : "Drawing" }
+{ "StudName" : "Ramya", "Sem" : "VI", "Hobbies" : "Violin" }
+{ "StudName" : "Rahul" }
+{ "_id" : ObjectId("62d4c66a9e01af7adee22d59"), "StudName" : "Rahul" }
+{ "_id" : 1, "StudName" : "Trisha", "Sem" : "IV", "Hobbies" : "Cricket" }
+{ "_id" : 2, "StudName" : "Anagha", "Sem" : "V", "Hobbies" : "Drawing" }
+{ "_id" : 0, "StudName" : "Tasmiya", "Sem" : "VI", "Hobbies" : "Singing" }
+{ "_id" : 3, "StudName" : "Ramya", "Sem" : "VI", "Hobbies" : "Violin" }
+{ "StudName" : "Tasmiya", "Sem" : "VI", "Hobbies" : "Singing" }
+{ "StudName" : "Trisha", "Sem" : "IV", "Hobbies" : "Cricket" }
+{ "StudName" : "Anagha", "Sem" : "V", "Hobbies" : "Drawing" }
+{ "StudName" : "Ramya", "Sem" : "VI", "Hobbies" : "Violin" }
+{ "StudName" : "Rahul" }
+{ "_id" : 1, "StudName" : "Trisha", "Sem" : "IV", "Hobbies" : "Cricket" }
+{ "_id" : 0, "StudName" : "Tasmiya", "Sem" : "VI", "Hobbies" : "Singing" }
+{ "_id" : 3, "StudName" : "Ramya", "Sem" : "VI", "Hobbies" : "Violin" }
+{ "_id" : ObjectId("62d4c66a9e01af7adee22d59"), "StudName" : "Rahul" }
+{ "_id" : 2, "StudName" : "Anagha", "Sem" : "V", "Hobbies" : "Drawing" }
+{ "StudName" : "Tasmiya", "Sem" : "VI", "Hobbies" : "Singing" }
+{ "StudName" : "Trisha", "Sem" : "IV", "Hobbies" : "Cricket" }
+{ "StudName" : "Anagha", "Sem" : "V", "Hobbies" : "Drawing" }
+{ "StudName" : "Ramya", "Sem" : "VI", "Hobbies" : "Violin" }
+{ "StudName" : "Rahul" }
+WriteResult({ "nInserted" : 1 })
+{ "StudName" : "Tasmiya", "Sem" : "VI", "Hobbies" : "Singing" }
+{ "StudName" : "Trisha", "Sem" : "IV", "Hobbies" : "Cricket" }
+{ "StudName" : "Anagha", "Sem" : "V", "Hobbies" : "Drawing" }
+{ "StudName" : "Ramya", "Sem" : "VI", "Hobbies" : "Violin" }
+{ "StudName" : "Rahul" }
+{ "StudName" : "Meenakshi", "Sem" : "IV" }
+6
+2
+{ "_id" : 1, "StudName" : "Trisha", "Sem" : "IV", "Hobbies" : "Cricket" }
+{ "_id" : 2, "StudName" : "Anagha", "Sem" : "V", "Hobbies" : "Drawing" }
+{ "_id" : 3, "StudName" : "Ramya", "Sem" : "VI", "Hobbies" : "Violin" }
+{ "_id" : ObjectId("62d4c66a9e01af7adee22d59"), "StudName" : "Rahul" }
+{
+	"_id" : ObjectId("62d4c66a7a576a20603d9453"),
+	"StudName" : "Meenakshi",
+	"Sem" : "IV"
+}
+WriteResult({ "nRemoved" : 1 })
+{ "StudName" : "Tasmiya", "Sem" : "VI", "Hobbies" : "Singing" }
+{ "StudName" : "Trisha", "Sem" : "IV", "Hobbies" : "Cricket" }
+{ "StudName" : "Anagha", "Sem" : "V", "Hobbies" : "Drawing" }
+{ "StudName" : "Ramya", "Sem" : "VI", "Hobbies" : "Violin" }
+{ "StudName" : "Meenakshi", "Sem" : "IV" }
+true
